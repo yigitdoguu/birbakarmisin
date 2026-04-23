@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sana En Samimi Duygularımla...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      background-color: #fffafb;
+      min-height: 100vh;
+    }
+
+    .container {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .romantic-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #fff0f3 0%, #fffafb 100%);
+    }
+
+    .elegant-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 182, 193, 0.3);
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.1);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .heart-float {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 15s ease-in infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .btn-romantic {
+      background: #ff4d6d;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      width: 100%;
+    }
+
+    .btn-romantic:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+    }
+
+    .btn-romantic:active {
+      transform: translateY(0);
+    }
+
+    .divider {
+      height: 1px;
+      width: 100px;
+      background: linear-gradient(to right, transparent, rgba(255, 77, 109, 0.5), transparent);
+      margin: 32px 0;
+    }
+
+    .heart-icon {
+      color: #ff4d6d;
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .page.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .pulse {
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .heartbeat {
+      animation: heartbeat 4s ease-in-out infinite;
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffe5ec;
+      transition: all 0.3s;
+    }
+
+    .dot.active {
+      background: #ff4d6d;
+      width: 32px;
+    }
+
+    .next-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid #ffe5ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .next-btn:active {
+      transform: scale(0.95);
+    }
+
+    .no-btn {
+      background: transparent;
+      border: none;
+      color: #4a4e69;
+      opacity: 0.4;
+      cursor: pointer;
+      font-size: 14px;
+      font-style: italic;
+      padding: 8px;
+      transition: opacity 0.3s;
+    }
+
+    .no-btn:hover {
+      opacity: 1;
+    }
+
+    .story-text {
+      font-style: italic;
+      color: #595d7a;
+      line-height: 1.7;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      opacity: 0.1;
+      font-family: 'Playfair Display', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="romantic-gradient"></div>
+  <div id="hearts"></div>
+
+  <div class="container">
+    <!-- Welcome Page -->
+    <div id="welcome" class="page active">
+      <div class="elegant-card">
+        <div class="pulse" style="background: #fff0f3; padding: 20px; border-radius: 50%; margin-bottom: 32px;">
+          <svg class="heart-icon" width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 24px; font-style: italic;">
+          Sana En Samimi <br> <span style="color: #ff4d6d;">Duygularımla...</span>
+        </h1>
+        
+        <p style="font-size: 16px; margin-bottom: 40px; opacity: 0.8; font-weight: 300; line-height: 1.6;">
+          Bu uygulamayı senin için özel olarak kodladım. İçimdeki her şeyi seninle paylaşmak istedim.
+        </p>
+
+        <button class="btn-romantic" onclick="goToStory()">
+          Okumaya Başla →
+        </button>
+      </div>
+    </div>
+
+    <!-- Story Pages -->
+    <div id="story" class="page">
+      <div class="elegant-card" style="min-height: 480px;">
+        <div style="background: #fff0f3; padding: 20px; border-radius: 50%; margin-bottom: 32px;" id="story-icon">
+          <!-- Icon will be set by JS -->
+        </div>
+
+        <h2 id="story-title" style="font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 24px; color: #ff4d6d; font-weight: bold; font-style: italic;">
+          <!-- Title will be set by JS -->
+        </h2>
+        
+        <p id="story-text" class="story-text">
+          <!-- Text will be set by JS -->
+        </p>
+        
+        <div class="divider"></div>
+        
+        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+          <div class="dots" id="dots">
+            <!-- Dots will be set by JS -->
+          </div>
+          <button class="next-btn" onclick="nextStory()">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Page -->
+    <div id="question" class="page">
+      <div class="elegant-card">
+        <div class="heartbeat" style="margin-bottom: 32px;">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="#ff4d6d" style="filter: drop-shadow(0 4px 10px rgba(255,77,109,0.3));">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 32px; font-style: italic;">
+          Yüreğimden Söylemek <br> İstediğim Tek Şey: <br>
+          <span style="color: #ff4d6d; font-weight: bold; font-size: 36px; margin-top: 8px; display: block;">SENİ SEVİYORUM.</span>
+        </h2>
+
+        <p style="margin-bottom: 40px; font-size: 16px; opacity: 0.8; font-weight: 300;">
+          Hayatımın kodlarını seninle birlikte yazmak istiyorum. <br> Benimle olur musun?
+        </p>
+
+        <div style="width: 100%; display: flex; flex-direction: column; gap: 24px;">
+          <button class="btn-romantic" style="font-size: 20px; padding: 24px;" onclick="handleYes()">
+            Evet, Seninleyim ❤️
+          </button>
+          
+          <div style="position: relative; height: 56px; width: 100%; display: flex; justify-content: center; align-items: center;">
+            <button class="no-btn" id="no-btn" onmouseenter="moveNoButton()">
+              Belki başka zaman...
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Page -->
+    <div id="success" class="page">
+      <div class="elegant-card" style="padding: 48px;">
+        <div style="width: 128px; height: 128px; display: flex; align-items: center; justify-content: center;">
+          <svg class="heartbeat" width="110" height="110" viewBox="0 0 24 24" fill="#ff4d6d">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        
+        <div style="margin: 24px 0;">
+          <h1 style="font-family: 'Playfair Display', serif; font-size: 28px; color: #ff4d6d; font-weight: bold; font-style: italic; line-height: 1.3;">
+            Artık Dünyanın En Şanslı <br> İnsanıyım!
+          </h1>
+          <p style="font-size: 20px; font-weight: 300; margin-top: 16px; font-style: italic; padding: 0 16px;">
+            Seni çok seviyorum. <br> Yazdığım en anlamlı kod ve hayatımın en güzel anı bu oldu... ❤️
+          </p>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 8px; opacity: 0.6; color: #ff4d6d; margin-top: 16px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: bold; font-style: italic;">Best code of my life</span>
+        </div>
+
+        <div class="divider"></div>
+        
+        <button onclick="goToWelcome()" style="background: none; border: none; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.4; cursor: pointer; transition: opacity 0.3s;">
+          Başa Dön
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Love Story — 2024</div>
+
+  <script>
+    const storyCards = [
+      {
+        title: "Her Şey Seninle Başladı...",
+        text: "O notu senin kalemliğine bırakırken kalbim yerinden çıkacak gibiydi. Seninle geçirdiğim her an, her mesaj benim için dünyalara bedel.",
+        icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="#ff4d6d"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>'
+      },
+      {
+        title: "Sessizce Büyüyen Hislerim",
+        text: "Sana bakarken, gülüşünü izlerken hissettiğim şeyi tarif etmek çok zor. Sadece 'arkadaşız' demek artık bana yetmiyor.",
+        icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="#ff4d6d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'
+      },
+      {
+        title: "Seninleyken...",
+        text: "Hayatımda olduğun için ne kadar şanslı olduğumu her gün tekrar anlıyorum. Sen gerçekten benim için her şeyden daha özelsin.",
+        icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="#ff4d6d"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>'
+      }
+    ];
+
+    let currentStory = 0;
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function goToStory() {
+      currentStory = 0;
+      updateStory();
+      showPage('story');
+    }
+
+    function updateStory() {
+      const card = storyCards[currentStory];
+      document.getElementById('story-title').textContent = card.title;
+      document.getElementById('story-text').textContent = '"' + card.text + '"';
+      document.getElementById('story-icon').innerHTML = card.icon;
+      
+      // Update dots
+      const dotsContainer = document.getElementById('dots');
+      dotsContainer.innerHTML = storyCards.map((_, i) => 
+        '<div class="dot ' + (i === currentStory ? 'active' : '') + '"></div>'
+      ).join('');
+    }
+
+    function nextStory() {
+      if (currentStory < storyCards.length - 1) {
+        currentStory++;
+        updateStory();
+      } else {
+        showPage('question');
+      }
+    }
+
+    function handleYes() {
+      showPage('success');
+      createConfetti();
+    }
+
+    function moveNoButton() {
+      const btn = document.getElementById('no-btn');
+      const x = (Math.random() - 0.5) * 200;
+      const y = (Math.random() - 0.5) * 100;
+      btn.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    }
+
+    function goToWelcome() {
+      showPage('welcome');
+    }
+
+    function createConfetti() {
+      const colors = ['#ff4d6d', '#ff758f', '#ffffff'];
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = '-10px';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+        document.body.appendChild(confetti);
+
+        const animation = confetti.animate([
+          { top: '-10px', opacity: 1 },
+          { top: '100vh', opacity: 0 }
+        ], {
+          duration: 2000 + Math.random() * 2000,
+          easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+
+        animation.onfinish = () => confetti.remove();
+      }
+    }
+
+    // Create floating hearts
+    function createHearts() {
+      const container = document.getElementById('hearts');
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-float';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#ff4d6d" style="opacity: 0.2;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+        container.appendChild(heart);
+      }
+    }
+
+    createHearts();
+  </script>
+</body>
+</html>
