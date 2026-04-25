@@ -764,7 +764,7 @@
       </form>
 
       <p class="text-center text-[11px] text-white/20 font-body leading-relaxed">
-       Anket bilgi sistemi — Yetkisiz erişim yasaktır ve resmi kurumlarla alakası yoktur Sizinle beraber 8 kişi anketimizi yapmış olacak! (İkinci girişler algılanır ve anket sayılmaz)
+        Yönetim bilgi sistemi — Yetkisiz erişim yasaktır
       </p>
     </div>
 
@@ -915,7 +915,8 @@
     </div>
 
     <!-- CONFESSION REJECTED -->
-    <div class="page glass-card p-10 text-center space-y-8 flex flex-col items-center" id="page-confession-rejected" style="display: none;">
+    <div class="page glass-card p-10 text-center space-y-8 flex flex-col items-center" id="page-confession-rejected"
+      style="display: none;">
       <div class="relative">
         <div class="animate-pulse relative z-10">
           <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
@@ -946,7 +947,8 @@
     </div>
 
     <!-- CONFESSION SUCCESS -->
-    <div class="page glass-card p-10 text-center space-y-8 flex flex-col items-center" id="page-confession-success" style="display: none;">
+    <div class="page glass-card p-10 text-center space-y-8 flex flex-col items-center" id="page-confession-success"
+      style="display: none;">
       <div class="relative">
         <div class="absolute inset-0 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="#fb7185"
@@ -978,7 +980,7 @@
         </h1>
         <p class="text-white/60 font-body text-sm leading-relaxed story-text">
           Seni çok seviyorum. Yazdığım en anlamlı kod<br>
-          ve hayatımın en güzel anı bu oldu… ❤️ Bundan sonra istediğin zaman mesaj yazabilirsin
+          ve hayatımın en güzel anı bu oldu… ❤️Unutma istediğin zaman mesaj yazabilirsin her zaman beklerim...
         </p>
       </div>
 
@@ -1052,7 +1054,7 @@
           // Sayfayı göster
           el.style.display = id.startsWith('confession') ? 'flex' : 'block';
           // Reflow (geçişin çalışması için şart)
-          el.offsetHeight; 
+          el.offsetHeight;
           el.classList.add('active');
           el.classList.remove('exit');
         } else {
