@@ -93,7 +93,7 @@ const STORY_CARDS = [
   {
     title: 'Sessizce Büyüyen Hislerim',
     text: 'Sana bakarken, gülüşünü izlerken hissettiğim şeyi tarif etmek çok zor. Sadece "arkadaşız" demek artık bana yetmiyor.',
-    icon: <Heart className="text-rose-400" fill="#fb7185" size={36} />,
+    icon: <Lock className="text-rose-400" size={36} />,
   },
   {
     title: 'Seninleyken…',
@@ -346,7 +346,7 @@ export default function App() {
               animate={{ scale: [1, 1.08, 1], rotate: [0, 3, -3, 0] }}
               transition={{ repeat: Infinity, duration: 3 }}
             >
-              <Heart size={72} fill="#fb7185" className="text-transparent mx-auto drop-shadow-lg" />
+              <Lock size={72} className="text-rose-400 mx-auto drop-shadow-lg" />
             </motion.div>
             <div className="space-y-3">
               <h2 className="text-4xl font-display font-semibold text-white">Hazır mısın?</h2>
@@ -377,7 +377,7 @@ export default function App() {
                   transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
                   className="w-20 h-20 rounded-full bg-rose-500/20 flex items-center justify-center ring-2 ring-rose-400/30"
                 >
-                  <Heart size={40} fill="#fb7185" className="text-transparent drop-shadow" />
+                  <Lock size={40} className="text-rose-400 drop-shadow" />
                 </motion.div>
 
                 <div className="space-y-3">
@@ -453,7 +453,7 @@ export default function App() {
                   animate={{ rotate: [0, 12, -12, 0], scale: [1, 1.06, 1] }}
                   transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
                 >
-                  <Heart size={80} fill="#fb7185" className="text-transparent drop-shadow-xl" />
+                  <Lock size={80} className="text-rose-400 drop-shadow-xl" />
                 </motion.div>
 
                 <div className="space-y-4">
@@ -510,14 +510,7 @@ export default function App() {
                       animate={{ scale: [1, 2.5], opacity: [0.4, 0] }}
                       transition={{ repeat: Infinity, duration: 2, delay: i * 0.6, ease: 'easeOut' }}
                     >
-                      <Heart size={80} fill="#fb7185" className="text-transparent" />
-                    </motion.div>
-                  ))}
-                  <motion.div
-                    animate={{ scale: [1, 1.08, 1] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                  >
-                    <Heart size={80} fill="#fb7185" className="text-transparent drop-shadow-xl relative z-10" />
+                    <Lock size={80} className="text-rose-400 drop-shadow-xl relative z-10" />
                   </motion.div>
                 </div>
 
@@ -555,7 +548,6 @@ export default function App() {
       {/* Footer */}
       <div className="fixed bottom-5 left-0 right-0 text-center z-0 pointer-events-none">
         <p className="font-display italic text-[10px] tracking-widest uppercase text-white/10">
-          Love Story — 2025
         </p>
       </div>
     </div>
