@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proje Bitmiştir - Teşekkürler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Outfit:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-image: url('rainy_moody_background_1777299370488.png');
+            --primary-text: #ffffff;
+            --secondary-text: rgba(255, 255, 255, 0.7);
+            --lightning-color: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #05050a;
+            color: var(--primary-text);
+            font-family: 'Outfit', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Background & Overlay */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transform: scale(1.1);
+            filter: blur(2px);
+        }
+
+        .lightning-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Lightning Animation Trigger */
+        .flash {
+            animation: lightning-flash 0.5s ease-out;
+        }
+
+        @keyframes lightning-flash {
+            0% { opacity: 0; }
+            10% { opacity: 0.4; }
+            15% { opacity: 0.1; }
+            20% { opacity: 0.5; }
+            100% { opacity: 0; }
+        }
+
+        /* Rain Container */
+        #rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Main Content */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        p {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-weight: 300;
+            color: var(--secondary-text);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 2rem auto;
+            opacity: 0;
+            animation: fadeIn 2s ease-in 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Glassmorphism Card Effect */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="lightning-overlay" id="lightning"></div>
+    <canvas id="rain-canvas"></canvas>
+
+    <div class="content">
+        <div class="card">
+            <h1>Proje Bitmiştir</h1>
+            <div class="divider"></div>
+            <p>Katılımcılara teşekkür ederiz</p>
+        </div>
+    </div>
+
+    <script>
+        // Rain System
+        const canvas = document.getElementById('rain-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const raindrops = [];
+        const numDrops = 150;
+
+        class Drop {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.length = Math.random() * 20 + 10;
+                this.speed = Math.random() * 15 + 10;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(174, 194, 224, ${this.opacity})`;
+                ctx.lineWidth = 1;
+                ctx.lineCap = 'round';
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y + this.length);
+                ctx.stroke();
+            }
+        }
+
+        for (let i = 0; i < numDrops; i++) {
+            raindrops.push(new Drop());
+        }
+
+        function animateRain() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            raindrops.forEach(drop => {
+                drop.update();
+                drop.draw();
+            });
+            requestAnimationFrame(animateRain);
+        }
+
+        animateRain();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Lightning System
+        const lightning = document.getElementById('lightning');
+
+        function triggerLightning() {
+            const delay = Math.random() * 7000 + 3000; // 3-10 seconds
+            setTimeout(() => {
+                lightning.classList.add('flash');
+                setTimeout(() => {
+                    lightning.classList.remove('flash');
+                }, 500);
+                triggerLightning();
+            }, delay);
+        }
+
+        triggerLightning();
+
+        // Subtle parallax movement
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            document.querySelector('.background').style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>
